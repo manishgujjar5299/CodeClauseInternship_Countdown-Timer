@@ -1,104 +1,140 @@
-body {  
-   font-family: 'Roboto', sans-serif;     
-   display: flex;     
-   justify-content: center;     
-   align-items: center;     
-   height: 100vh;     
-   margin: 0;     
-   background-image: url('https://i.pinimg.com/564x/0a/f7/74/0af7741991985e2b530c8f62135c3eea.jpg');     
-   background-size: cover;     
-   background-position: center;     
-   transition: background-image 1s ease-in-out; 
-}  
-.container {     
-   text-align: center;     
-   background-color: rgba(255, 255, 255, 0.8);     
-   padding: 2rem;     
-   border-radius: 10px;     
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);     
-   max-width: 90%;     
-   width: 600px; 
-}  
-h1 {     
-   color: #333;     
-   margin-bottom: 1rem; 
-}  
-.input-section, .theme-section {     
-    margin-bottom: 1rem; 
-}  
-input[type="datetime-local"], 
-
-button {     
-    padding: 0.5rem;     
-    font-size: 1rem; 
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://i.pinimg.com/564x/0a/f7/74/0af7741991985e2b530c8f62135c3eea.jpg');
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
 }
 
-button {     
-    background-color: #4a90e2;     
-    color: white;     
-    border: none;     
-    cursor: pointer;     
-    transition: background-color 0.3s; 
+.container {
+    text-align: center;
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    width: 600px;
 }
 
-button:hover {     
-    background-color: #357ae8; 
-} 
+h1 {
+    color: black;
+    margin-bottom: 1rem;
+}
 
-#countdown {     
-    display: flex;     
-    justify-content: center;     
-    gap: 1rem;     
-    flex-wrap: wrap; 
-} 
+.input-section, .theme-section {
+    margin-bottom: 1rem;
+}
 
-.time-section {     
-    background-color: #4a90e2;     
-    color: white;     
-    padding: 1rem;     
-    border-radius: 5px;     
-    min-width: 100px;     
-    transition: transform 0.3s, background-color 0.3s; 
-}  
+input[type="datetime-local"], button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: black;
+}
 
-.time-section:hover {     
-    transform: scale(1.05); 
-}  
+button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-.time-section span {     
-    font-size: 2.5em;     
-    font-weight: bold; 
-}  
+button:hover {
+    background-color: #357ae8;
+}
 
-#eventName {     
-    margin-top: 1rem;     
-    font-size: 1.2em;     
-    color: #333;     
-    cursor: pointer; 
-}  
+#countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    text-align: center;
+}
 
-@media (max-width: 600px) {     
-    .container {         
-        padding: 1rem;     
+#countdown h2 {
+    margin-bottom: 15px;
+}
+
+.countdown-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+.time-section {
+    background-color: rgba(255, 255, 255, 0.2); /* Very light transparent background */
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    min-width: 100px;
+    transition: transform 0.3s;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Improves readability on varying backgrounds */
+}
+
+.time-section:hover {
+    transform: scale(1.05);
+}
+
+.time-section span {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+#eventName {
+    margin-top: 1rem;
+    font-size: 1.2em;
+    color: #333;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
     }
-    
-    .time-section {         
-        min-width: 80px;     
-    } 
-}  
+    .time-section {
+        min-width: 80px;
+    }
+}
 
-@keyframes pulse {     
-    0% {         
-        transform: scale(1);     
-    }     
-    50% {         
-        transform: scale(1.1);     
-    }     
-    100% {         
-        transform: scale(1);     
-    } 
-}  
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
 
-.pulse {     
-    animation: pulse 0.5s ease-in-out; 
-} 
+.pulse {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* Your existing CSS code here */
+
+.event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.event-item button {
+    background-color: #ff4136;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#events-list {
+    margin-bottom: 20px;
+}

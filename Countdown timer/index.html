@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
-    <title> Countdown Timer</title>  
-   <link rel="stylesheet" href="styles.css">     
-   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet"> </head>
-    <body>  
-    <div class="container">         
-        <h1>Event Countdown Timer</h1>         
-        <div class="input-section">             
-            <input type="datetime-local" id="eventDateTime">            
-             <button onclick="startCountdown()">Start Countdown</button>        
-             </div>         
-             <div class="theme-section">             
-                <label for="themeColor">Choose theme color:</label>             
-                <input type="color" id="themeColor" value="#4a90e2" onchange="changeTheme()">        
-             </div>         
-             <div id="countdown">     
-                <div class="time-section">                 
-                    <span id="days">0</span>                 
-                    
-                    <p>Days</p>            
-                 </div>             
-                 <div class="time-section">                 
-                    
-                    <span id="hours">0</span>                 
-                    <p>Hours</p>            
-                 </div>             
-                 <div class="time-section">                 
-                    <span id="minutes">0</span>                
-                     <p>Minutes</p>             
-                    </div>             
-                    <div class="time-section">                 
-                        <span id="seconds">0</span>                
-                         <p>Seconds</p>             
-                        </div>         
-                    </div>         
-                    <div id="eventName" contenteditable="true">Click to edit event name</div>     
-                </div>     
-                <script src="script.js"></script>
-             </body>
-              </html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Event Countdown Timer</h1>
+        <div class="input-section">
+            <input type="text" id="eventName" placeholder="Event Name">
+            <input type="datetime-local" id="eventDateTime">
+            <button onclick="addEvent()">Add Event</button>
+        </div>
+        <div class="theme-section">
+            <label for="themeColor">Choose theme color:</label>
+            <input type="color" id="themeColor" value="#4a90e2" onchange="changeTheme()">
+        </div>
+        <div id="events-list"></div>
+        <div id="countdown">
+            <div class="time-section">
+                <span id="days">0</span>
+                <p>Days</p>
+            </div>
+            <div class="time-section">
+                <span id="hours">0</span>
+                <p>Hours</p>
+            </div>
+            <div class="time-section">
+                <span id="minutes">0</span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-section">
+                <span id="seconds">0</span>
+                <p>Seconds</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

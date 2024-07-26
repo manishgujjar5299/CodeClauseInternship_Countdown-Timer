@@ -1,34 +1,97 @@
 let countdownInterval;
 let colorChangeInterval;
+let events = [];
+
+function addEvent() {
+    const eventName = document.getElementById("eventName").value;
+    const eventDateTime = document.getElementById("eventDateTime").value;
+    
+    if (eventName && eventDateTime) {
+        const event = {
+            name: eventName,
+            dateTime: new Date(eventDateTime).getTime()
+        };
+        events.push(event);
+        events.sort((a, b) => a.dateTime - b.dateTime); // Sort events by date
+        updateEventsList();
+        startCountdown();
+    }
+}
+
+function updateEventsList() {
+    const eventsList = document.getElementById("events-list");
+    eventsList.innerHTML = "";
+    events.forEach((event, index) => {
+        const eventItem = document.createElement("div");
+        eventItem.className = "event-item";
+        eventItem.innerHTML = `
+            <span>${event.name} - ${new Date(event.dateTime).toLocaleString()}</span>
+            <button onclick="removeEvent(${index})">Remove</button>
+        `;
+        eventsList.appendChild(eventItem);
+    });
+}
+
+function removeEvent(index) {
+    events.splice(index, 1);
+    updateEventsList();
+    startCountdown();
+}
 
 function startCountdown() {
     if (countdownInterval) {
         clearInterval(countdownInterval);
     }
-    
-    const eventDateTime = new Date(document.getElementById("eventDateTime").value).getTime();
-    
-    countdownInterval = setInterval(function() {
+
+    function updateCountdown() {
+        if (events.length === 0) {
+            document.getElementById("countdown").innerHTML = "<h2>No upcoming events</h2>";
+            return;
+        }
+
         const now = new Date().getTime();
-        const distance = eventDateTime - now;
-        
+        const nextEvent = events[0]; // The next event is always the first one after sorting
+        const distance = nextEvent.dateTime - now;
+
+        if (distance < 0) {
+            // Event has ended, remove it and start countdown for the next one
+            events.shift();
+            updateEventsList();
+            updateCountdown(); // Recursively call to start next event countdown
+            return;
+        }
+
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        document.getElementById("days").innerHTML = days;
-        document.getElementById("hours").innerHTML = hours;
-        document.getElementById("minutes").innerHTML = minutes;
-        document.getElementById("seconds").innerHTML = seconds;
-        
-        if (distance < 0) {
-            clearInterval(countdownInterval);
-            document.getElementById("countdown").innerHTML = "<h2>EVENT HAS STARTED</h2>";
-        }
-    }, 1000);
 
-    // Start color changing for timer sections
+        document.getElementById("countdown").innerHTML = `
+    <h2>Countdown to: ${nextEvent.name}</h2>
+    <div class="countdown-boxes">
+        <div class="time-section">
+            <span id="days">${days}</span>
+            <p>Days</p>
+        </div>
+        <div class="time-section">
+            <span id="hours">${hours}</span>
+            <p>Hours</p>
+        </div>
+        <div class="time-section">
+            <span id="minutes">${minutes}</span>
+            <p>Minutes</p>
+        </div>
+        <div class="time-section">
+            <span id="seconds">${seconds}</span>
+            <p>Seconds</p>
+        </div>
+    </div>
+`;
+}
+
+    updateCountdown(); // Initial call
+    countdownInterval = setInterval(updateCountdown, 1000);
+
     startColorChange();
 }
 
@@ -60,7 +123,6 @@ const backgroundImages = [
 
 let currentImageIndex = 0;
 
-
 function changeBackgroundImage() {
     const now = new Date();
     const minutes = now.getMinutes();
@@ -77,8 +139,6 @@ function changeBackgroundImage() {
 
 // Initial call to set the background and start the cycle
 changeBackgroundImage();
-
-setInterval(changeBackgroundImage, 1 * 60 * 1000);
 
 document.querySelectorAll('.time-section').forEach(el => {
     el.style.transition = 'transform 0.3s, background-color 0.3s';
