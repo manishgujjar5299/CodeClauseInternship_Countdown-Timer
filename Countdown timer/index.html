@@ -1,48 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Background Generator</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1> Background Generator</h1>
-        <div id="preview"></div>
-        <div class="controls">
-            <div class="gradient-type">
-                <label for="gradientType">Gradient Type:</label>
-                <select id="gradientType">
-                    <option value="linear">Linear</option>
-                    <option value="radial">Radial</option>
-                    <option value="conic">Conic</option>
-                </select>
-            </div>
-            <div id="angleControl" class="angle-control">
-                <label for="angle">Angle:</label>
-                <input type="range" id="angle" min="0" max="360" value="90">
-                <span id="angleValue">90°</span>
-            </div>
-            <div id="colorStops"></div>
-            <button id="addColor">Add Color</button>
-            <button id="randomize">Randomize Colors</button>
-            <div class="preset-container">
-                <label for="presets">Presets:</label>
-                <select id="presets">
-                    <option value="">Choose a preset</option>
-                    <option value="sunset">Sunset</option>
-                    <option value="ocean">Ocean</option>
-                    <option value="forest">Forest</option>
-                </select>
-            </div>
-        </div>
-        <div class="output">
-            <h3>Generated CSS:</h3>
-            <code id="cssOutput"></code>
-            <button id="copyCss">Copy CSS</button>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+<head><meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <title> Countdown Timer</title>  
+   <link rel="stylesheet" href="styles.css">     
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet"> </head>
+    <body>  
+    <div class="container">         
+        <h1>Event Countdown Timer</h1>         
+        <div class="input-section">             
+            <input type="datetime-local" id="eventDateTime">            
+             <button onclick="startCountdown()">Start Countdown</button>        
+             </div>         
+             <div class="theme-section">             
+                <label for="themeColor">Choose theme color:</label>             
+                <input type="color" id="themeColor" value="#4a90e2" onchange="changeTheme()">        
+             </div>         
+             <div id="countdown">     
+                <div class="time-section">                 
+                    <span id="days">0</span>                 
+                    
+                    <p>Days</p>            
+                 </div>             
+                 <div class="time-section">                 
+                    
+                    <span id="hours">0</span>                 
+                    <p>Hours</p>            
+                 </div>             
+                 <div class="time-section">                 
+                    <span id="minutes">0</span>                
+                     <p>Minutes</p>             
+                    </div>             
+                    <div class="time-section">                 
+                        <span id="seconds">0</span>                
+                         <p>Seconds</p>             
+                        </div>         
+                    </div>         
+                    <div id="eventName" contenteditable="true">Click to edit event name</div>     
+                </div>     
+                <script src="script.js"></script>
+             </body>
+              </html>
