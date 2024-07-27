@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Countdown Timer</title>
+    <title>Countdown Timer</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -19,49 +19,26 @@
             <label for="themeColor">Choose theme color:</label>
             <input type="color" id="themeColor" value="#4a90e2" onchange="changeTheme()">
         </div>
-        <div class="background-section">
-            <label for="backgroundImage">Choose background:</label>
-            <select id="backgroundImage" onchange="changeBackgroundImage()">
-                <option value="default">Default</option>
-                <option value="nature">Nature</option>
-                <option value="city">City</option>
-                <option value="abstract">Abstract</option>
-            </select>
-        </div>
         <div id="events-list"></div>
         <div id="countdown">
-            <h2 id="countdownTitle"></h2>
-            <div class="progress-bars">
-                <div class="progress-bar" id="daysProgress"></div>
-                <div class="progress-bar" id="hoursProgress"></div>
-                <div class="progress-bar" id="minutesProgress"></div>
-                <div class="progress-bar" id="secondsProgress"></div>
+            <div class="time-section">
+                <span id="days">0</span>
+                <p>Days</p>
             </div>
-            <div class="countdown-boxes">
-                <div class="time-section">
-                    <span id="days">0</span>
-                    <p>Days</p>
-                </div>
-                <div class="time-section">
-                    <span id="hours">0</span>
-                    <p>Hours</p>
-                </div>
-                <div class="time-section">
-                    <span id="minutes">0</span>
-                    <p>Minutes</p>
-                </div>
-                <div class="time-section">
-                    <span id="seconds">0</span>
-                    <p>Seconds</p>
-                </div>
+            <div class="time-section">
+                <span id="hours">0</span>
+                <p>Hours</p>
             </div>
-        </div>
-        <div class="share-buttons">
-            <button onclick="shareOnFacebook()">Share on Facebook</button>
-            <button onclick="shareOnTwitter()">Share on Twitter</button>
+            <div class="time-section">
+                <span id="minutes">0</span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-section">
+                <span id="seconds">0</span>
+                <p>Seconds</p>
+            </div>
         </div>
     </div>
-    <audio id="alertSound" src="alert.mp3"></audio>
     <script src="script.js"></script>
 </body>
 </html>
