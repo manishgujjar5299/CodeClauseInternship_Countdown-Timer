@@ -3,21 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer</title>
+    <title>Advanced Event Countdown Timer</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Event Countdown Timer</h1>
+        <h1>Advanced Event Countdown Timer</h1>
         <div class="input-section">
             <input type="text" id="eventName" placeholder="Event Name">
             <input type="datetime-local" id="eventDateTime">
+            <select id="eventCategory">
+                <option value="personal">Personal</option>
+                <option value="work">Work</option>
+                <option value="holiday">Holiday</option>
+            </select>
+            <select id="eventRecurrence">
+                <option value="none">No recurrence</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+            <select id="eventTimezone">
+                <!-- Timezones will be populated by JavaScript -->
+            </select>
+            <textarea id="eventNotes" placeholder="Event Notes"></textarea>
             <button onclick="addEvent()">Add Event</button>
         </div>
         <div class="theme-section">
             <label for="themeColor">Choose theme color:</label>
             <input type="color" id="themeColor" value="#4a90e2" onchange="changeTheme()">
+            <button id="darkModeToggle">Toggle Dark Mode</button>
         </div>
         <div id="events-list"></div>
         <div id="countdown">
@@ -38,6 +55,12 @@
                 <p>Seconds</p>
             </div>
         </div>
+        <div id="progress-bar"></div>
+        <div id="weather-forecast"></div>
+        <div id="motivational-quote"></div>
+        <button id="exportEvents">Export Events</button>
+        <input type="file" id="importEvents" accept=".json">
+        <button onclick="shareEvents()">Share Events</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="script.js"></script>

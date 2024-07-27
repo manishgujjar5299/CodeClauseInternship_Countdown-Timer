@@ -5,16 +5,25 @@ let events = [];
 function addEvent() {
     const eventName = document.getElementById("eventName").value;
     const eventDateTime = document.getElementById("eventDateTime").value;
+    const eventCategory = document.getElementById("eventCategory").value;
+    const eventRecurrence = document.getElementById("eventRecurrence").value;
+    const eventTimezone = document.getElementById("eventTimezone").value;
+    const eventNotes = document.getElementById("eventNotes").value;
     
     if (eventName && eventDateTime) {
         const event = {
             name: eventName,
-            dateTime: new Date(eventDateTime).getTime()
+            dateTime: new Date(eventDateTime).getTime(),
+            category: eventCategory,
+            recurrence: eventRecurrence,
+            timezone: eventTimezone,
+            notes: eventNotes
         };
         events.push(event);
-        events.sort((a, b) => a.dateTime - b.dateTime); // Sort events by date
+        events.sort((a, b) => a.dateTime - b.dateTime);
         updateEventsList();
         startCountdown();
+        saveEvents();
     }
 }
 
@@ -25,7 +34,7 @@ function updateEventsList() {
         const eventItem = document.createElement("div");
         eventItem.className = "event-item";
         eventItem.innerHTML = `
-            <span>${event.name} - ${new Date(event.dateTime).toLocaleString()}</span>
+            <span>${event.name} - ${new Date(event.dateTime).toLocaleString()} (${event.category})</span>
             <div>
                 <button onclick="editEvent(${index})">Edit</button>
                 <button onclick="removeEvent(${index})">Remove</button>
@@ -39,28 +48,31 @@ function editEvent(index) {
     const event = events[index];
     document.getElementById("eventName").value = event.name;
     document.getElementById("eventDateTime").value = new Date(event.dateTime).toISOString().slice(0, 16);
+    document.getElementById("eventCategory").value = event.category;
+    document.getElementById("eventRecurrence").value = event.recurrence;
+    document.getElementById("eventTimezone").value = event.timezone;
+    document.getElementById("eventNotes").value = event.notes;
     
-    // Remove the old event
     events.splice(index, 1);
     
-    // Update the add button to become an update button
     const addButton = document.querySelector('button');
     addButton.textContent = 'Update Event';
     addButton.onclick = function() {
         addEvent();
-        // Reset the button after updating
         addButton.textContent = 'Add Event';
         addButton.onclick = addEvent;
     };
     
     updateEventsList();
     startCountdown();
+    saveEvents();
 }
 
 function removeEvent(index) {
     events.splice(index, 1);
     updateEventsList();
     startCountdown();
+    saveEvents();
 }
 
 function startCountdown() {
@@ -75,17 +87,35 @@ function startCountdown() {
         }
 
         const now = new Date().getTime();
-        const nextEvent = events[0]; // The next event is always the first one after sorting
+        const nextEvent = events[0];
         const distance = nextEvent.dateTime - now;
 
         if (distance < 0) {
-            // Event has ended, trigger confetti
             triggerConfetti();
-            
-            // Remove the ended event
-            events.shift();
+            if (nextEvent.recurrence !== 'none') {
+                let newDateTime = new Date(nextEvent.dateTime);
+                switch(nextEvent.recurrence) {
+                    case 'daily':
+                        newDateTime.setDate(newDateTime.getDate() + 1);
+                        break;
+                    case 'weekly':
+                        newDateTime.setDate(newDateTime.getDate() + 7);
+                        break;
+                    case 'monthly':
+                        newDateTime.setMonth(newDateTime.getMonth() + 1);
+                        break;
+                    case 'yearly':
+                        newDateTime.setFullYear(newDateTime.getFullYear() + 1);
+                        break;
+                }
+                nextEvent.dateTime = newDateTime.getTime();
+                events.sort((a, b) => a.dateTime - b.dateTime);
+            } else {
+                events.shift();
+            }
             updateEventsList();
-            updateCountdown(); // Recursively call to start next event countdown
+            saveEvents();
+            updateCountdown();
             return;
         }
 
@@ -115,9 +145,13 @@ function startCountdown() {
             </div>
         </div>
     `;
+
+        updateProgressBar(distance, nextEvent.dateTime - now);
+        updateWeatherForecast(nextEvent);
+        updateMotivationalQuote();
     }
 
-    updateCountdown(); // Initial call
+    updateCountdown();
     countdownInterval = setInterval(updateCountdown, 1000);
 
     startColorChange();
@@ -130,7 +164,6 @@ function triggerConfetti() {
         origin: { y: 0.6 }
     });
 
-    // Display a celebratory message
     const message = document.createElement('div');
     message.textContent = `🎉 ${events[0].name} has arrived! 🎉`;
     message.style.fontSize = '24px';
@@ -146,10 +179,11 @@ function triggerConfetti() {
     message.style.zIndex = '1000';
     document.body.appendChild(message);
 
-    // Remove the message after 5 seconds
     setTimeout(() => {
         document.body.removeChild(message);
     }, 5000);
+
+    playAlertSound();
 }
 
 function startColorChange() {
@@ -162,13 +196,20 @@ function startColorChange() {
         document.querySelectorAll('.time-section').forEach(el => {
             el.style.backgroundColor = "#" + randomColor;
         });
-    }, 1000); // Change color every second
+    }, 1000);
 }
 
 function changeTheme() {
     const color = document.getElementById("themeColor").value;
-    document.querySelector('button').style.backgroundColor = color;
+    document.documentElement.style.setProperty('--theme-color', color);
+    localStorage.setItem('themeColor', color);
 }
+
+const darkModeToggle = document.getElementById('darkModeToggle');
+darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+});
 
 const backgroundImages = [
     'https://picsum.photos/1920/1080?random=1',

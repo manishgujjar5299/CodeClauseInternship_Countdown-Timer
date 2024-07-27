@@ -1,28 +1,36 @@
+:root {
+    --theme-color: #4a90e2;
+    --bg-color: #ffffff;
+    --text-color: #333333;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    background-image: url('https://i.pinimg.com/564x/0a/f7/74/0af7741991985e2b530c8f62135c3eea.jpg');
+    background-image: url('https://picsum.photos/1920/1080?random=1');
     background-size: cover;
     background-position: center;
     transition: background-image 1s ease-in-out;
+    color: var(--text-color);
+    background-color: var(--bg-color);
 }
 
 .container {
     text-align: center;
-    /* background-color: rgba(255, 255, 255, 0.8); */
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 90%;
     width: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 h1 {
-    color: black;
+    color: var(--theme-color);
     margin-bottom: 1rem;
 }
 
@@ -30,14 +38,14 @@ h1 {
     margin-bottom: 1rem;
 }
 
-input[type="datetime-local"], button {
+input, select, textarea, button {
     padding: 0.5rem;
     font-size: 1rem;
-    color: black;
+    margin: 0.5rem 0;
 }
 
 button {
-    background-color: #4a90e2;
+    background-color: var(--theme-color);
     color: white;
     border: none;
     cursor: pointer;
@@ -45,7 +53,7 @@ button {
 }
 
 button:hover {
-    background-color: #357ae8;
+    opacity: 0.8;
 }
 
 #countdown {
@@ -55,7 +63,6 @@ button:hover {
     flex-wrap: wrap;
     text-align: center;
 }
-
 
 #countdown h2 {
     margin-bottom: 15px;
@@ -67,17 +74,14 @@ button:hover {
     gap: 1rem;
 }
 
-
 .time-section {
-    background-color: rgba(255, 255, 255, 0.2); /* Very light transparent background */
+    background-color: var(--theme-color);
     color: white;
     padding: 1rem;
     border-radius: 5px;
     min-width: 100px;
     transition: transform 0.3s;
-    backdrop-filter: blur(10px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Improves readability on varying backgrounds */
 }
 
 .time-section:hover {
@@ -92,29 +96,9 @@ button:hover {
 #eventName {
     margin-top: 1rem;
     font-size: 1.2em;
-    color: #333;
+    color: var(--text-color);
     cursor: pointer;
 }
-
-@media (max-width: 600px) {
-    .container {
-        padding: 1rem;
-    }
-    .time-section {
-        min-width: 80px;
-    }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.pulse {
-    animation: pulse 0.5s ease-in-out;
-}
-
 
 .event-item {
     display: flex;
@@ -137,4 +121,54 @@ button:hover {
 
 #events-list {
     margin-bottom: 20px;
+}
+
+#progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+#progress-bar .progress {
+    height: 100%;
+    background-color: var(--theme-color);
+    transition: width 0.5s ease-in-out;
+}
+
+#weather-forecast, #motivational-quote {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+}
+
+.dark-mode {
+    --bg-color: #333333;
+    --text-color: #ffffff;
+}
+
+.dark-mode .container {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+    .time-section {
+        min-width: 80px;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 0.5s ease-in-out;
 }
