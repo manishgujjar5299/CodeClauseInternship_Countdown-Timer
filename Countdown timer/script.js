@@ -26,10 +26,35 @@ function updateEventsList() {
         eventItem.className = "event-item";
         eventItem.innerHTML = `
             <span>${event.name} - ${new Date(event.dateTime).toLocaleString()}</span>
-            <button onclick="removeEvent(${index})">Remove</button>
+            <div>
+                <button onclick="editEvent(${index})">Edit</button>
+                <button onclick="removeEvent(${index})">Remove</button>
+            </div>
         `;
         eventsList.appendChild(eventItem);
     });
+}
+
+function editEvent(index) {
+    const event = events[index];
+    document.getElementById("eventName").value = event.name;
+    document.getElementById("eventDateTime").value = new Date(event.dateTime).toISOString().slice(0, 16);
+    
+    // Remove the old event
+    events.splice(index, 1);
+    
+    // Update the add button to become an update button
+    const addButton = document.querySelector('button');
+    addButton.textContent = 'Update Event';
+    addButton.onclick = function() {
+        addEvent();
+        // Reset the button after updating
+        addButton.textContent = 'Add Event';
+        addButton.onclick = addEvent;
+    };
+    
+    updateEventsList();
+    startCountdown();
 }
 
 function removeEvent(index) {
@@ -54,7 +79,10 @@ function startCountdown() {
         const distance = nextEvent.dateTime - now;
 
         if (distance < 0) {
-            // Event has ended, remove it and start countdown for the next one
+            // Event has ended, trigger confetti
+            triggerConfetti();
+            
+            // Remove the ended event
             events.shift();
             updateEventsList();
             updateCountdown(); // Recursively call to start next event countdown
@@ -93,6 +121,35 @@ function startCountdown() {
     countdownInterval = setInterval(updateCountdown, 1000);
 
     startColorChange();
+}
+
+function triggerConfetti() {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    // Display a celebratory message
+    const message = document.createElement('div');
+    message.textContent = `🎉 ${events[0].name} has arrived! 🎉`;
+    message.style.fontSize = '24px';
+    message.style.fontWeight = 'bold';
+    message.style.color = 'white';
+    message.style.backgroundColor = 'rgba(0,0,0,0.7)';
+    message.style.padding = '20px';
+    message.style.borderRadius = '10px';
+    message.style.position = 'fixed';
+    message.style.top = '50%';
+    message.style.left = '50%';
+    message.style.transform = 'translate(-50%, -50%)';
+    message.style.zIndex = '1000';
+    document.body.appendChild(message);
+
+    // Remove the message after 5 seconds
+    setTimeout(() => {
+        document.body.removeChild(message);
+    }, 5000);
 }
 
 function startColorChange() {
